@@ -156,5 +156,30 @@
         <!-- /Track Modal-->
 
 
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 id="modal-delete-title" align="center">Delete Records?</h3>
+                        <div id="delete-errors"></div>
+                    </div>
+                    <div class="modal-body">
+                        <p id="delete-message"><strong>Are you sure you want to permanently delete the selected records?</strong></p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <input type="hidden" id="delete_id" name="delete_id">
+
+                        <input type="button" id="multi-delete-btn" onclick="confirmMultiDelete();" class="btn btn-danger" value="Delete">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Delete Modal -->
+
     </div>
 @endsection
