@@ -94,7 +94,66 @@
         </div>
         <!-- /.table-responsive -->
 
+        <!-- Track Modal - Add and Edit Tracks -->
+        <div class="modal fade" id="trackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <!-- .modal-dialog -->
+            <div class="modal-dialog" role="document">
 
+                <!-- .modal-content -->
+                <div class="modal-content">
+
+                    <!-- .modal-header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 id="modal-title" align="center">Add New Track</h3>
+                    </div>
+                    <!-- /.modal-header -->
+
+                    <!-- .modal-body -->
+                    <div class="modal-body">
+                        <div class="alert alert-danger form_errors hidden">
+                            <ul class="error-list"></ul>
+                        </div>
+
+                        {{ Form::open(array('url'=>'track.add','name'=>'trackForm','id'=>'trackForm','class'=>'form-horizontal form-label-left')) }}
+
+                        <div class="form-group">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label for="title">Track Title</label>
+                                <input type="text" class="form-control" name="title" id="title" placeholder="Enter Track Title">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label for="artist_names">Artist Names</label>
+                                <input type="text" class="form-control" name="artist_names" id="artist_names" placeholder="Enter Artist Names">
+                            </div>
+                        </div>
+
+                        {{ Form::close() }}
+                    </div>
+                    <!-- /.modal-body -->
+
+                    <!-- .modal-footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="track-btn-save" value="add">Add Track</button>
+                        <input type="hidden" id="track_id" name="track_id" value="0">
+
+                    </div>
+                    <!-- /.modal-footer -->
+
+                </div>
+                <!-- /.modal-content -->
+
+            </div>
+            <!-- /.modal-dialog -->
+
+        </div>
+        <!-- /Track Modal-->
 
 
     </div>
