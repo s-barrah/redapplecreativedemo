@@ -46,6 +46,7 @@
             </div>
         </div>
 
+    {{ Form::open(array('name'=>'tracks-form','id'=>'tracks-form',)) }}
 
         <!-- .table-responsive -->
         <div class="table-responsive">
@@ -75,15 +76,14 @@
                             </div>
                         </td>
 
-                        <td><a class="link" href="javascript: void(0)" >{{$track->title}} </a></td>
+                        <td>{{$track->title}}</td>
 
-                        <td><a class="link" href="javascript: void(0)" >{{$track->artist_names}} </a></td>
+                        <td>{{$track->artist_names}}</td>
 
                         <td><small>{{ date('F j, Y', strtotime($track->created_at)) }}</small></td>
                         <td><small>{{ date('F j, Y', strtotime($track->updated_at)) }}</small></td>
                         <td>
-                            <button type="button" data-action="edit" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>
-                            <button type="button" class="btn btn-danger btn-xs" value="{{$track->id}}" title="Delete {{$track->title}}"><i class="fa fa-trash-o"></i> Delete</button>
+                            <button type="button" data-action="edit" value="{{$track->id}}" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>
                         </td>
                     </tr>
                 @endforeach
@@ -93,6 +93,9 @@
             <!-- /#schools-table-->
         </div>
         <!-- /.table-responsive -->
+
+
+    {{ Form::close() }}
 
         <!-- Track Modal - Add and Edit Tracks -->
         <div class="modal fade" id="trackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -101,7 +101,7 @@
 <!-- Custom Scripts -->
 <script src="{{ asset('js/custom/script.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/custom/dataTables.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('js/custom/functions.js') }}" type="text/javascript"></script>
 
 </body>
 </html>
