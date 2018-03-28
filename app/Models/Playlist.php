@@ -40,7 +40,7 @@ class Playlist extends Model
     }
 
     public function tracks(){
-        return $this->belongsToMany('App\Models\Track')->withTimestamps();
+        return $this->belongsToMany('App\Models\Track', 'playlist_tracks')->withTimestamps();
     }
 
 }

@@ -22,9 +22,6 @@
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" media="screen, projection">
 
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-
     <!-- Animate.css style -->
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}" rel="stylesheet">
 
@@ -49,15 +46,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/') }}">ToucanDemo</a>
+                <a class="navbar-brand" href="{{ url('/') }}">Red Apple Demo</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>{{ Html::linkRoute('home', 'Home')  }}</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>{{ Html::linkRoute('members', 'Members')  }}</li>
-                    <li>{{ Html::linkRoute('schools', 'Schools')  }}</li>
+                    <li>{{ Html::linkRoute('playlists', 'Playlists')  }}</li>
+                    <li>{{ Html::linkRoute('tracks', 'Tracks')  }}</li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -101,15 +98,10 @@
 <!-- Bootstrap Validator -->
 <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrapValidator.min.js') }}"></script>
 
-<!-- Select2 -->
-<script src="{{ asset('js/select2/select2.full.min.js') }}"></script>
-
 <!-- Custom Scripts -->
 <script src="{{ asset('js/custom/script.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/custom/functions.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/custom/dataTables.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/custom/members.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/custom/schools.js') }}" type="text/javascript"></script>
+
 
 </body>
 </html>

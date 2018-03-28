@@ -18,8 +18,7 @@ class PlaylistController extends Controller
             ->with('pageTitle', 'Playlists')
             ->with('pageID', 'playlists')
             //->with('members', Member::all());
-            ->with('playlists', Playlist::orderBy('id', 'asc')->get())
-            ->with('tracks', Track::orderBy('id', 'asc')->get());
+            ->with('playlists', Playlist::orderBy('id', 'asc')->get());
 
     }
 
