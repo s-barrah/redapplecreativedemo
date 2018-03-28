@@ -83,7 +83,7 @@
                         <td><small>{{ date('F j, Y', strtotime($track->updated_at)) }}</small></td>
                         <td>
                             <button type="button" data-action="edit" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>
-                            <button type="button" class="btn btn-danger btn-xs" value="{{$school->id}}" title="Delete {{$track->title}}"><i class="fa fa-trash-o"></i> Delete</button>
+                            <button type="button" class="btn btn-danger btn-xs" value="{{$track->id}}" title="Delete {{$track->title}}"><i class="fa fa-trash-o"></i> Delete</button>
                         </td>
                     </tr>
                 @endforeach
