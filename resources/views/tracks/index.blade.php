@@ -33,9 +33,18 @@
 
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-sm-8 col-xs-9">
                 <p><a id="btn-add" name="btn-add" class="btn btn-primary" onclick="addTrack();"><i class="fa fa-plus"></i> Add Track</a></p>
 
+            </div>
+            <div class="col-md-3 col-md-push-3 col-sm-4 col-xs-3">
+                <label for="school">Filter By Playlist</label>
+                <select name="select-playlist" id="select-playlist" onchange="filterByPlaylist(this);" class="form-control">
+                    <option value="0">Showing All</option>
+                    @foreach($playlists as $playlist)
+                        <option value="{{$playlist->id}}">{{$playlist->name}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <br/>
@@ -62,6 +71,7 @@
 
                     <th>Title</th>
                     <th>Artist Names</th>
+                    <th>Playlist(s)</th>
                     <th>Created</th>
                     <th>Updated</th>
                     <th>Edit</th>
@@ -79,6 +89,13 @@
                         <td>{{$track->title}}</td>
 
                         <td>{{$track->artist_names}}</td>
+                        <td>
+                            <ul>
+                            @foreach($track->playlists as $playlist)
+                                <li>{{$playlist->name}}</li>
+                            @endforeach
+                            </ul>
+                        </td>
 
                         <td><small>{{ date('F j, Y', strtotime($track->created_at)) }}</small></td>
                         <td><small>{{ date('F j, Y', strtotime($track->updated_at)) }}</small></td>

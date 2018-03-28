@@ -17,7 +17,8 @@ class TrackController extends Controller
         return view('tracks.index')
             ->with('pageTitle', 'Tracks')
             ->with('pageID', 'tracks')
-            ->with('tracks', Track::orderBy('id', 'asc')->get());
+            ->with('tracks', Track::orderBy('id', 'asc')->get())
+            ->with('playlists', Playlist::orderBy('id', 'asc')->get());
 
     }
 
