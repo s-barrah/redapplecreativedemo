@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Playlist;
+use App\Models\PlaylistTrack;
 use App\Models\Track;
 use Illuminate\Http\Request;
 use Redirect;
@@ -23,7 +24,6 @@ class PlaylistController extends Controller
     }
 
 
-
     /**
      * View Playlist
      * @variable $id.
@@ -38,6 +38,25 @@ class PlaylistController extends Controller
             ->with('school', $playlist)
             ->with('tracks', $playlist->tracks);
 
+    }
+
+    /**
+     * Get Playlist Details.
+     *
+     * @param  int  $id
+     * @return \App\Models\Playlist
+     */
+    public function get_playlist(Request $request){
+
+        //GET PLAYLIST OBJECT
+        $playlist = Playlist::find($request->id);
+
+        //RETURN DATA
+        $data = array(
+            'id' => $playlist->id,
+            'name' => $playlist->name,
+        );
+        return response()->json($data);
     }
 
 
@@ -74,14 +93,15 @@ class PlaylistController extends Controller
 
 
             //take a track and add a playlist
-            $track = Track::find($request->track_id);
+            //$track = Track::find($request->track_id);
 
-            if($playlist && $track){
+            if($playlist){
 
-                $track->playlists()->attach($playlist->id);
+                //$track->playlists()->attach($playlist->id);
                 //$school->members()->syncWithoutDetaching([$playlist->id]);
 
-                $message = $track->name.' has been added to '.$playlist->name.'!';
+                //$message = $track->name.' has been added to '.$playlist->name.'!';
+                $message = $playlist->name.' has been created!';
                 $data['message'] = $message;
                 $data['success'] = true;
 
@@ -101,22 +121,98 @@ class PlaylistController extends Controller
 
 
     /**
-     * Edit Playlist
-     * @variable $id.
+     * Update Playlist with validation.
+     * @variable AJAX Request object
+     *@return $data
      */
-    public function edit($id, $random){
+    public function update(Request $request){
 
-        $playlist = Playlist::find($id);
+        //$id = Input::get('id');
+        //INITIALISE VARIABLES
+        $data = [];
 
-        $data = array(
-            'pageTitle' => 'Edit - '.ucwords($playlist->name),
-            'pageID' => 'playlists',
-            'playlist' => $playlist
-        );
-        return view('playlists.edit', $data);
+        //VALIDATE ALL INPUTS
+        $validation = Playlist::validate($request->all());
 
+        //VALIDATION FAILS
+        if($validation->fails()){
+
+            //GET VALIDATION ERRORS
+            $errors = $validation->errors()->all();
+            $data['errors'] = $errors;
+            $data['success'] = false;
+        }else{
+
+            //UPDATE DB
+            Playlist::whereId($request->id)->update(array(
+                'name' => $request->name,
+            ));
+
+            //GET OBJECT USING ID
+            $playlist = Playlist::find($request->id);
+
+            $data['id'] = $playlist->id;
+            $data['title'] = $playlist->name;
+            $data['created_at'] = date('F j, Y g:i a', strtotime($track->created_at));
+            $data['updated_at'] = date('F j, Y g:i a', strtotime($track->updated_at));
+
+            $message = 'Playlist updated successfully!';
+            $data['message'] = $message;
+            $data['success'] = true;
+
+        }
+        //RETURN DATA AS JSON
+        //return Response::json($data);
+        return response()->json($data);
     }
 
+
+    /**
+     * Delete Playlists .
+     * @variable Request object
+     *@return $data
+     */
+    public function delete_playlists(Request $request){
+
+        //get checked items from post
+        $checked = $request->cb;
+
+        if($checked){
+
+            //start count
+            $i = 0;
+
+            //LOOP THROUGH CHECKED VALUES
+            //AND DELETE
+            foreach($checked as $each){
+
+                //Playlist::find($each)->delete();
+                $playlist = Playlist::find($each);
+
+                //DETACH ID FROM PIVOT TABLE
+                $playlist->tracks()->detach($each);
+
+                $playlist->delete();
+
+                $i++;
+            }
+            //Playlist::whereIn('id',$request->cb)->delete();
+
+            //NOTIFICATION MESSAGE
+            $message = 'Playlist deleted successfully!';
+            if($i > 1){
+                $message = $i.' playlists deleted successfully!';
+            }
+            //RETURN DATA AS JSON
+            $data['message'] = $message;
+            $data['success'] = true;
+            //return Response::json($data);
+        }
+
+        $data['message'] = 'Playlist(s) could not be deleted!';
+
+        return response()->json($data);
+    }
 
 
 

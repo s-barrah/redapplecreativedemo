@@ -64,10 +64,10 @@
                     <th>Artist Names</th>
                     <th>Created</th>
                     <th>Updated</th>
-                    <th>Edit / Delete</th>
+                    <th>Edit</th>
                 </tr>
                 </thead>
-                <tbody id="track-list">
+                <tbody id="tracks-list">
                 @foreach($tracks as $track)
                     <tr id="track{{$track->id}}">
                         <td>
@@ -83,7 +83,7 @@
                         <td><small>{{ date('F j, Y', strtotime($track->created_at)) }}</small></td>
                         <td><small>{{ date('F j, Y', strtotime($track->updated_at)) }}</small></td>
                         <td>
-                            <button type="button" data-action="edit" value="{{$track->id}}" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>
+                            <button type="button" data-action="edit" value="{{$track->id}}" onclick="editTrack(this);" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>
                         </td>
                     </tr>
                 @endforeach
