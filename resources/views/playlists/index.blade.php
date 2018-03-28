@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+
         <br/>
         <!-- breadcrumb -->
         <div class="row">
@@ -48,6 +49,8 @@
         </div>
 
 
+    {{ Form::open(array('name'=>'playlists-form','id'=>'playlists-form',)) }}
+
         <!-- .table-responsive -->
         <div class="table-responsive">
             <!-- #playlists-table-->
@@ -76,22 +79,26 @@
                             </div>
                         </td>
 
-                        <td><a class="link" href="javascript: void(0)" >{{$playlist->name}} </a></td>
+                        <td><a class="link" href="javascript: void(0)" data-action="view" data-content="{{$playlist->id}}" onclick="getPlaylist(this);" title="View {{$playlist->name}}">{{$playlist->name}} </a></td>
                         <td>
                             <small>
+                                <ul class="list-unstyled">
                                 @if(!$playlist->tracks->isEmpty())
+                                    <?php $i = 1 ;?>
                                     @foreach($playlist->tracks as $track)
-                                        {{$track->title}};
+                                        <li>{{ $i}}. {{$track->title}}</li>
+                                            <?php $i++;?>
                                     @endforeach
                                 @else
-                                    No tracks
+                                        <li>No tracks</li>
                                 @endif
+                                </ul>
                             </small>
                         </td>
                         <td><small>{{ date('F j, Y', strtotime($playlist->created_at)) }}</small></td>
                         <td><small>{{ date('F j, Y', strtotime($playlist->updated_at)) }}</small></td>
                         <td>
-                            <button type="button" data-action="edit" class="btn btn-info btn-xs" title="Edit {{$playlist->name}}"><i class="fa fa-pencil"></i> Edit</button>
+                            <button type="button" data-content="{{$playlist->id}}" onclick="getPlaylist(this);" class="btn btn-info btn-xs" title="Edit {{$playlist->name}}"><i class="fa fa-pencil"></i> Edit</button>
                             <button type="button" class="btn btn-danger btn-xs" value="{{$playlist->id}}" title="Delete {{$playlist->name}}"><i class="fa fa-trash-o"></i> Delete</button>
                         </td>
                     </tr>
@@ -102,6 +109,127 @@
             <!-- /#schools-table-->
         </div>
         <!-- /.table-responsive -->
+
+    {{ Form::close() }}
+
+
+
+
+    <!-- View Playlist Modal -->
+        <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 id="playlistName" align="center"></h3>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <table class="display table-hover table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th width="15%">#</th>
+                                <th width="35%">Title</th>
+                                <th width="35%">Artists</th>
+                                <th width="15%">Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody id="playlist-tracks">
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /View Playlist Modal -->
+
+
+
+        <!-- Playlist Modal - Add and Edit Playlists -->
+        <div class="modal fade" id="playlistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <!-- .modal-dialog -->
+            <div class="modal-dialog" role="document">
+
+                <!-- .modal-content -->
+                <div class="modal-content">
+
+                    <!-- .modal-header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 id="modal-title" align="center">Add New Playlist</h3>
+                    </div>
+                    <!-- /.modal-header -->
+
+                    <!-- .modal-body -->
+                    <div class="modal-body">
+                        <div class="alert alert-danger form_errors hidden">
+                            <ul class="error-list"></ul>
+                        </div>
+
+                        {{ Form::open(array('url'=>'playlist.add','name'=>'playlistForm','id'=>'playlistForm','class'=>'form-horizontal form-label-left')) }}
+
+                        <div class="form-group">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label for="name">Playlist Name</label>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Playlist Name">
+                            </div>
+                        </div>
+
+                        {{ Form::close() }}
+                    </div>
+                    <!-- /.modal-body -->
+
+                    <!-- .modal-footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="playlist-btn-save" value="add">Add Playlist</button>
+                        <input type="hidden" id="playlist_id" name="playlist_id" value="0">
+
+                    </div>
+                    <!-- /.modal-footer -->
+
+                </div>
+                <!-- /.modal-content -->
+
+            </div>
+            <!-- /.modal-dialog -->
+
+        </div>
+        <!-- /Playlist Modal-->
+
+
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 id="modal-delete-title" align="center">Delete Records?</h3>
+                        <div id="delete-errors"></div>
+                    </div>
+                    <div class="modal-body">
+                        <p id="delete-message"><strong>Are you sure you want to permanently delete the selected records?</strong></p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <input type="hidden" id="delete_id" name="delete_id">
+
+                        <input type="button" id="multi-delete-btn" onclick="confirmMultiDelete();" class="btn btn-danger" value="Delete">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Delete Modal -->
+
 
 
 

@@ -83,6 +83,7 @@
                         <td><small>{{ date('F j, Y', strtotime($track->created_at)) }}</small></td>
                         <td><small>{{ date('F j, Y', strtotime($track->updated_at)) }}</small></td>
                         <td>
+                            <button type="button" data-action="add-to-playlist" class="btn btn-primary btn-xs add-to-playlist" data-content="{{$track->id}}" title="Add to Playlist" onclick="getTrack(this);"><i class="fa fa-plus"></i> Add to Playlist</button>
                             <button type="button" data-action="edit" value="{{$track->id}}" onclick="editTrack(this);" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>
                         </td>
                     </tr>
@@ -183,6 +184,49 @@
             </div>
         </div>
         <!-- /Delete Modal -->
+
+
+
+        <!-- Add To Playlist Modal -->
+        <div class="modal fade" id="addToPlaylistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 align="center">Add <span id="track-title"></span> to <span id="playlist"></span>?</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="form_errors"></div>
+                        {{ Form::open(array('name'=>'addToPlaylistForm','id'=>'addToPlaylistForm','class'=>'form-horizontal form-label-left')) }}
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-sm-3 col-xs-4"l for="playlist_id">Playlist</label>
+                            <div class="col-md-10 col-sm-9 col-xs-8">
+                                <input type="text" class="form-control hidden" name="playlist_name" id="playlist_name">
+                                <select name="playlist_id" id="playlistID" class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <input type="hidden" id="trackID" name="trackID">
+
+                        <input type="button" onclick="addTrackToPlaylist();" class="btn btn-primary" value="Add">
+
+                    </div>
+                    {{ Form::close() }}
+                </div>
+            </div>
+        </div>
+        <!-- /Add to Playlist Modal -->
+
+        <br/><br/>
+
+
 
     </div>
 @endsection

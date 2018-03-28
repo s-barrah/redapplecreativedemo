@@ -35,7 +35,7 @@ class PlaylistController extends Controller
         return view('playlists.view')
             ->with('pageTitle', 'View - '.ucwords($playlist->name))
             ->with('pageID', 'playlists')
-            ->with('school', $playlist)
+            ->with('playlist', $playlist)
             ->with('tracks', $playlist->tracks);
 
     }
@@ -51,10 +51,32 @@ class PlaylistController extends Controller
         //GET PLAYLIST OBJECT
         $playlist = Playlist::find($request->id);
 
+        $tracks = '';
+        $countTracks = 0;
+        //GENERATE LIST OF TRACKS
+        if($playlist->tracks->count() > 0){
+            $i = 1;
+            foreach ($playlist->tracks as $track){
+                $tracks .= '<tr id="'.$track->id.'">';
+                $tracks .= '<td>'.$i.'</td>';
+                $tracks .= '<td>'.$track->title.'</td>';
+                $tracks .= '<td>'.$track->artist_names.'</td>';
+                $tracks .= '<td><button class="btn btn-warning btn-xs" data-content="'.$request->id.'" value="'.$track->id.'" onclick="removeTrackFromPlaylist(this);"  title="Remove '.$track->title.' from '.$playlist->name.' "><i class="fa fa-ban"></i></button></td>';
+                $i++;
+                $countTracks++;
+            }
+        }else{
+            $tracks .= '<tr>';
+            $tracks .= '<td colspan="4"><div class="alert alert-default text-center"><i class="fa fa-ban"></i> '.$playlist->name.' has no tracks yet!</div></td>';
+            $tracks .= '</tr>';
+        }
+
         //RETURN DATA
         $data = array(
             'id' => $playlist->id,
             'name' => $playlist->name,
+            'countTracks' => $countTracks,
+            'tracks' => $tracks,
         );
         return response()->json($data);
     }

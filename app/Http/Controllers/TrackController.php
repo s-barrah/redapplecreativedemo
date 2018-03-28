@@ -28,7 +28,7 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \App\Models\Track
      */
-    public function get_track(Request $request){
+    public function get_track2(Request $request){
 
         //GET TRACK OBJECT
         $track = Track::find($request->id);
@@ -41,6 +41,50 @@ class TrackController extends Controller
         );
         return response()->json($data);
     }
+
+
+    /**
+     * Get Track Details.
+     *
+     * @param  Request object
+     * @return \App\Models\Track
+     */
+
+    public function get_track(Request $request){
+
+        //GET TRACK OBJECT
+        $track = Track::find($request->id);
+        $playlistArray = [];
+        foreach($track->platlists as $platlist){
+            $playlistArray[] = $platlist->name;
+        }
+
+        //SELECT DROPDOWN FOR PLAYLISTS
+        //AND PREVENT DUPLICATES
+        $select_playlists = '<option value="">Select Playlist</option>';
+        //GET ALL SCHOOLS
+        $playlists = Playlist::all();
+        foreach ($playlists as $playlist){
+            if(!in_array($playlist->name, $playlistArray)){
+                $select_playlists .= '<option value="'.$playlist->id.'">'.$playlist->name.'</option>';
+            }
+        }
+        //RETURN DATA
+        $data = array(
+            'id' => $track->id,
+            'title' => $track->title,
+            'artist_names' => $track->artist_names,
+            'created' => date('F j, Y g:i a', strtotime($track->created_at)),
+            'updated' => date('F j, Y g:i a', strtotime($track->updated_at)),
+            'playlists' => implode('; ', $playlistArray),
+            'select' => $select_playlists,
+        );
+
+        //RETURN DATA AS JSON
+        return response()->json($data);
+        //return response()->json($member);
+    }
+
 
     /**
      * Add track with validation.
