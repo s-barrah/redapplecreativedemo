@@ -71,7 +71,7 @@
                     <tr id="track{{$track->id}}">
                         <td>
                             <div class="checkbox checkbox-primary" onclick="checkBox(this);">
-                                <input type="checkbox" name="cb[]" class="cb" value="{{$school->id}}"><label for="cb"></label>
+                                <input type="checkbox" name="cb[]" class="cb" value="{{$track->id}}"><label for="cb"></label>
                             </div>
                         </td>
 
