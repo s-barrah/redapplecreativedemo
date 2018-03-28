@@ -532,20 +532,18 @@ function savePlaylist() {
     $( "#load" ).show();
 
     var name = $('#name').val();
-    var email = $('#email').val();
-    var school_id = $('#school_id').val();
-    var id = $('#member_id').val();
+    var id = $('#playlist_id').val();
 
-    var my_url = "member/add";//for creating new resource; default url
+    var my_url = "playlist/add";//for creating new resource; default url
 
     //used to determine the url to use, add or update
-    var state = $('#btn-save').val();
+    var state = $('#playlist-btn-save').val();
     if (state == "update"){
-        my_url = "member/update";//edit/update member url
+        my_url = "playlist/update";//edit/update member url
     }
 
     //ENSURE NO EMPTY VALUES
-    if(id === '' || email === ''){
+    if(id === '' || name === ''){
         //HIDE SPINNER
         $( "#load" ).hide();
 
@@ -554,21 +552,9 @@ function savePlaylist() {
         return;
     }
 
-    //ENSURE SELECTED SCHOOL
-    if(state != "update" && (school_id === '' || school_id.length < 1)){
-        //HIDE SPINNER
-        $( "#load" ).hide();
-
-        //DISPLAY ERROR MESSAGE
-        printSingleErrorMsg('.form-errors','Please select a school!');
-        return;
-    }
-
     //var formData = new FormData(document.getElementById('memberForm'));
     var formData = {
         name: name,
-        email: email,
-        school_id: school_id,
         id: id,
     }
 
@@ -600,27 +586,10 @@ function savePlaylist() {
                 //console.log(data);
 
                 //RESET FORM
-                $('#memberForm').trigger("reset");
+                $('#playlistForm').trigger("reset");
 
                 //HIDE MODAL
-                $('#memberModal').modal('hide');
-
-                var member = '<tr id="member' + data.id + '">';
-                member += '<td><div class="checkbox checkbox-primary" onclick="checkBox(this);"><input type="checkbox" name="cb[]" class="cb" value="' + data.id + '"><label for="cb"></label></div></td>'
-                member += '<td>' + data.id + '</td>';
-                member += '<td><a href="javascript: void(0)" data-action="view" data-content="' + data.id + '" onclick="getMember(this);" title="View ' + data.name + '">' + data.name + '</a></td>';
-                member += '<td>' + data.email + '</td>';
-                member += '<td><small>' + data.created_at + '<small></td>';
-                member += '<td><small>' + data.updated_at + '</small></td>';
-                member += '<td><button type="button" data-action="add-to-school" class="btn btn-primary btn-xs add-to-school" data-content="' + data.id + '" onclick="getMember(this);" title="Add to School"><i class="fa fa-plus"></i> Add to School</button> ';
-                member += '<button type="button" data-action="edit" class="btn btn-info btn-xs" data-content="' + data.id + '" onclick="getMember(this);" title="Edit ' + data.name + '"><i class="fa fa-pencil"></i> Edit</button> ';
-                member += '<button type="button" class="btn btn-danger btn-xs" value="' + data.id + '" onclick="deleteItem(this);" title="Delete ' + data.name + '"><i class="fa fa-trash-o"></i> Delete</button></td></tr>';
-
-                if (state == "add"){ //if user added a new record
-                    $('#members-list').append(member);
-                }else{ //if member updated an existing record
-                    $("#member" +  data.id).replaceWith(member);
-                }
+                $('#playlistModal').modal('hide');
 
                 //DISPLAY ALERT NOTIFICATION
                 printSuccessMsg('#notif',data.message);

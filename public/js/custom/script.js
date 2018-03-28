@@ -13,7 +13,7 @@ $(document).ready(function () {
 
 
     //create / update playlist
-    $("#btn-save").click(function (e) {
+    $("#playlist-btn-save").click(function (e) {
         savePlaylist();
     });
 
