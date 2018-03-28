@@ -84,7 +84,7 @@
                         <td><small>{{ date('F j, Y', strtotime($track->updated_at)) }}</small></td>
                         <td>
                             <button type="button" data-action="add-to-playlist" class="btn btn-primary btn-xs add-to-playlist" data-content="{{$track->id}}" title="Add to Playlist" onclick="getTrack(this);"><i class="fa fa-plus"></i> Add to Playlist</button>
-                            <button type="button" data-action="edit" value="{{$track->id}}" onclick="editTrack(this);" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>
+                            <button type="button" data-action="edit" data-content="{{$track->id}}" onclick="getTrack(this);" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>
                         </td>
                     </tr>
                 @endforeach
@@ -193,7 +193,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 align="center">Add <span id="track-title"></span> to <span id="playlist"></span>?</h3>
+                        <h3 align="center">Add <span id="track-title"></span> to a playlist?</h3>
                     </div>
                     <div class="modal-body">
                         <div id="form_errors"></div>

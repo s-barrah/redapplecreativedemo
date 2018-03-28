@@ -44,7 +44,7 @@ function getTrack(obj) {
     var action = $(obj).attr('data-action');
 
     //GET ID FROM ELEMENT
-    var track_id = $(obj).val();
+    var track_id = $(obj).attr('data-content');
 
     //ENSURE NO EMPTY VALUES
     if(track_id === '' || formURL === ''){
@@ -81,8 +81,7 @@ function getTrack(obj) {
             if(action == 'add-to-playlist'){
                 //POPULATE FORM WITH DATA
                 $('#trackID').val(data.id);
-                $('#track-title').html(data.name);
-                $('#playlist').html(data.playlist_name);
+                $('#track-title').html(data.title);
 
                 //UPDATE SELECT
                 $('#playlistID').html(data.select);

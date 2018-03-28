@@ -55,8 +55,8 @@ class TrackController extends Controller
         //GET TRACK OBJECT
         $track = Track::find($request->id);
         $playlistArray = [];
-        foreach($track->platlists as $platlist){
-            $playlistArray[] = $platlist->name;
+        foreach($track->playlists as $playlist){
+            $playlistArray[] = $playlist->name;
         }
 
         //SELECT DROPDOWN FOR PLAYLISTS
@@ -239,7 +239,7 @@ class TrackController extends Controller
         //INITIALISE VARIABLES
         $data = [];
 
-        $track = Track::find($request->id);
+        $track = Track::find($request->track_id);
 
         //take a playlist and add a track
         $playlist = Playlist::find($request->playlist_id);
@@ -247,7 +247,7 @@ class TrackController extends Controller
         if($track && $playlist){
 
             //CHECK IF TRACK ALREADY ON PLAYLIST
-            $playlistTrack = PlaylistTrack::where('track_id',$request->id)
+            $playlistTrack = PlaylistTrack::where('track_id',$request->track_id)
                 ->where('playlist_id',$request->playlist_id)
                 ->first();
 
@@ -285,7 +285,7 @@ class TrackController extends Controller
         //INITIALISE VARIABLES
         $data = [];
 
-        $track = Track::find($request->id);
+        $track = Track::find($request->track_id);
 
         //get playlist and remove  track
         $playlist = Playlist::find($request->playlist_id);
