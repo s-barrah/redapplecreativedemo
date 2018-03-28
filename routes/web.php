@@ -19,6 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/tracks', 'TrackController@tracks')->name('tracks');
+Route::get('/tracks', 'TrackController@index')->name('tracks');
 
-Route::get('/playlists', 'PlaylistController@playlists')->name('playlists');
+Route::get('/playlists', 'PlaylistController@index')->name('playlists');
