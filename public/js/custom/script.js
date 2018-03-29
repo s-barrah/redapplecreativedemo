@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     // Material Select Initialization
-    $('.mdb-select').material_select();
+    //$('.mdb-select').material_select();
 
 
     //HIDE SPINNER

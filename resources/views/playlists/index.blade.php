@@ -99,7 +99,6 @@
                         <td><small>{{ date('F j, Y', strtotime($playlist->updated_at)) }}</small></td>
                         <td>
                             <button type="button" data-content="{{$playlist->id}}" onclick="getPlaylist(this);" class="btn btn-info btn-xs" title="Edit {{$playlist->name}}"><i class="fa fa-pencil"></i> Edit</button>
-                            <button type="button" class="btn btn-danger btn-xs" value="{{$playlist->id}}" title="Delete {{$playlist->name}}"><i class="fa fa-trash-o"></i> Delete</button>
                         </td>
                     </tr>
                 @endforeach
@@ -168,6 +167,7 @@
 
                     <!-- .modal-body -->
                     <div class="modal-body">
+                        <div class="form-errors"></div>
                         <div class="alert alert-danger form_errors hidden">
                             <ul class="error-list"></ul>
                         </div>
@@ -186,8 +186,8 @@
                         <div class="form-group tracks-group">
 
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <label for="name">Tracks</label>
-                                <select name="tracks[]" id="tracks" class="mdb-select" multiple>
+                                <label for="tracks">Tracks <small>(hold ctrl to select multiple)</small></label>
+                                <select name="tracks[]" id="tracks" class="form-control" multiple>
                                     <option value="" disabled selected>Select Tracks</option>
                                    @if($tracks)
                                        @foreach($tracks as $track)

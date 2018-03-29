@@ -113,19 +113,19 @@ class PlaylistController extends Controller
                 'name' => $request->name,
             ));
 
+            //get checked tracks from post
+            $checked = $request->tracks;
 
-            if($playlist){
+            if($playlist && $checked){
 
-                //get checked tracks from post
-                $checked = $request->tracks;
-
-                //take a track and add a playlist
+                //loop through checked items
                 foreach ($checked as $each){
 
                     $track = Track::find($each);
-
-                    //$track->playlists()->attach($each);
-                    $track->playlists()->syncWithoutDetaching([$each]);
+                    if($track){
+                        $track->playlists()->attach($playlist->id);
+                        //$track->playlists()->syncWithoutDetaching([$playlist->id]);
+                    }
 
                 }
 

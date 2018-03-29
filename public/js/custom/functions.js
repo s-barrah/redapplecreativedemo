@@ -531,6 +531,7 @@ function getPlaylist(obj) {
 function savePlaylist() {
 
     $( ".form_errors" ).addClass('hidden');
+    $( ".form-errors" ).html('');
 
     //SHOW SPINNER
     $( "#load" ).show();
@@ -539,8 +540,8 @@ function savePlaylist() {
     var id = $('#playlist_id').val();
     var track_id = $('#tracks').val();
 
-    var my_url = $('#playlistForm').attr('action');
-    //var my_url = "playlist/add";//for creating new resource; default url
+    //var my_url = $('#playlistForm').attr('action');
+    var my_url = "playlist/add";//for creating new resource; default url
 
     //used to determine the url to use, add or update
     var state = $('#playlist-btn-save').val();
@@ -554,7 +555,7 @@ function savePlaylist() {
         $( "#load" ).hide();
 
         //DISPLAY ERROR MESSAGE
-        printSingleErrorMsg('.form-errors','All fields are required!');
+        printSingleErrorMsg('.form-errors','Please enter a playlist name!');
         return;
     }
 
@@ -568,6 +569,8 @@ function savePlaylist() {
         return;
     }
 
+    console.log('Name: '+name+' Action:'+state+' Tracks: '+track_id+'');
+
     var formData = new FormData($('#playlistForm').get(0));
     /*
     var formData = {
@@ -575,13 +578,6 @@ function savePlaylist() {
         id: id,
     }
     */
-
-    //SETUP CSRF TOKEN FOR AJAX
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
 
     //console.log(formData);
 
@@ -591,6 +587,9 @@ function savePlaylist() {
         url: my_url,
         data: formData,
         dataType: 'json',
+        cache : false,
+        contentType: false,
+        processData: false,
         success: function (data) {
 
             //HIDE SPINNER
