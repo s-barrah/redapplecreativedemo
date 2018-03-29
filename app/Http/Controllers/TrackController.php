@@ -221,9 +221,10 @@ class TrackController extends Controller
             $data['message'] = $message;
             $data['success'] = true;
             //return Response::json($data);
+        }else{
+            $data['message'] = 'Delete Error!';
+            $data['success'] = false;
         }
-
-        $data['message'] = 'Track(s) could not be deleted!';
 
         return response()->json($data);
     }

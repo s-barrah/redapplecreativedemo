@@ -726,3 +726,111 @@ function checkBoxState() {
         $('#delButton').attr('disabled', 'disabled');
     }
 }
+
+
+
+
+
+/*
+* Display modal for multi delete
+*
+* */
+function multiDelete() {
+
+    //SHOW SPINNER
+    $( "#load" ).show();
+
+    //CLEAR DELETE ID
+    $('#delete_id').val("");
+
+    //HIDE SPINNER
+    $( "#load" ).hide();
+
+    //COUNT CHECKED BOXES
+    var count = $(".checkbox input[type='checkbox']:checked").length;
+    $('#selected-count').html(count);
+
+    //SHOW MODAL
+    $('#deleteModal').modal('show');
+}
+
+
+/*
+* Delete multiple records AJAX function
+*
+* */
+function confirmMultiDelete() {
+
+    //SHOW SPINNER
+    $( "#load" ).show();
+
+    //VARIABLES
+    var form, formUrl = '';
+
+    //GET MODEL
+    var model = $('#model').val();
+    if(model == 'playlists'){
+        form = new FormData($('#playlists-form').get(0));
+        formUrl = 'playlist/delete';
+    }
+    if(model == 'tracks'){
+        form = new FormData($('#tracks-form').get(0));
+        formUrl = 'track/delete';
+    }
+
+
+    //ENSURE NO EMPTY VALUES
+    if(model === '' || formUrl === ''){
+        return;
+    }
+
+    //AJAX CALL
+    $.ajax({
+
+        type: "POST",
+        url: formUrl,
+        data: form,
+        dataType: 'json',
+        cache : false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+
+
+            //ACTION SUCCESSFUL
+            if(data.success == true) {
+
+                //HIDE SPINNER
+                $( "#load" ).hide();
+                //console.log(data);
+                //HIDE MODAL
+                $('#deleteModal').modal('hide');
+
+                //DISPLAY ALERT NOTIFICATION
+                printSuccessMsg('#notif', data.message);
+
+                //remove deleted rows dynamically
+                $('table tr').has('input[name="cb[]"]:checked').remove();
+
+                //HIDE ALERT AND RELOAD PAGE AFTER WAITING
+                hideAndReload('#notif');
+
+            }//ELSE
+            else if(data.success == false){
+
+                //HIDE SPINNER
+                $( "#load" ).hide();
+
+                //DISPLAY ERROR MESSAGE
+                printSingleErrorMsg("#delete-errors",data.message);
+
+            }
+
+
+
+        },
+        error: function (xhr, status, error) {
+            console.log('Error:', error);
+        }
+    });
+}

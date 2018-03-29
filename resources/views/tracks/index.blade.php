@@ -192,7 +192,7 @@
                         <div id="delete-errors"></div>
                     </div>
                     <div class="modal-body">
-                        <p id="delete-message"><strong>Are you sure you want to permanently delete the selected records?</strong></p>
+                        <p id="delete-message"><strong>Are you sure you want to permanently delete the selected (<span id="selected-count"></span>) records?</strong></p>
 
                     </div>
                     <div class="modal-footer">
