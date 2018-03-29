@@ -22,6 +22,9 @@
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" media="screen, projection">
 
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+
     <!-- Animate.css style -->
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}" rel="stylesheet">
 
@@ -66,7 +69,8 @@
 <!-- JQuery scripts
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!-- JQuery local fallback-->
 <script>window.jQuery || document.write('<script type="text/javascript" src="{{ asset('js/jquery-2.1.1/jquery.min.js') }}"><\/script>')</script>
 
@@ -94,6 +98,8 @@
 <!-- DataTables local fallback-->
 <script>window.jQuery || document.write('<script type="text/javascript" src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"><\/script><script type="text/javascript" src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"><\/script><script type="text/javascript" src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"><\/script>')</script>
 
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
 
 <!-- Bootstrap Validator -->
 <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrapValidator.min.js') }}"></script>

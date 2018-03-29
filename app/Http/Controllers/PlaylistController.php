@@ -18,8 +18,8 @@ class PlaylistController extends Controller
         return view('playlists.index')
             ->with('pageTitle', 'Playlists')
             ->with('pageID', 'playlists')
-            //->with('members', Member::all());
-            ->with('playlists', Playlist::orderBy('id', 'asc')->get());
+            ->with('playlists', Playlist::orderBy('id', 'asc')->get())
+            ->with('tracks', Track::orderBy('id', 'asc')->get());
 
     }
 
@@ -114,13 +114,20 @@ class PlaylistController extends Controller
             ));
 
 
-            //take a track and add a playlist
-            //$track = Track::find($request->track_id);
-
             if($playlist){
 
-                //$track->playlists()->attach($playlist->id);
-                //$school->members()->syncWithoutDetaching([$playlist->id]);
+                //get checked tracks from post
+                $checked = $request->tracks;
+
+                //take a track and add a playlist
+                foreach ($checked as $each){
+
+                    $track = Track::find($each);
+
+                    //$track->playlists()->attach($each);
+                    $track->playlists()->syncWithoutDetaching([$each]);
+
+                }
 
                 //$message = $track->name.' has been added to '.$playlist->name.'!';
                 $message = $playlist->name.' has been created!';

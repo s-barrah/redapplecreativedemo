@@ -403,6 +403,8 @@ function addPlaylist() {
     //SHOW SPINNER
     $( "#load" ).show();
 
+    //SHOW SELECT TRACKS
+    $('.tracks-group').show();
 
     $('#modal-title').text("Add New Playlist");
     $('#playlist-btn-save').show();
@@ -478,6 +480,9 @@ function getPlaylist(obj) {
 
             if(action == 'edit'){
 
+                //HIDE SELECT TRACKS
+                $('.tracks-group').hide();
+
                 //POPULATE FORM WITH DATA
                 $('#playlist_id').val(data.id);
                 $('#name').val(data.name);
@@ -532,8 +537,10 @@ function savePlaylist() {
 
     var name = $('#name').val();
     var id = $('#playlist_id').val();
+    var track_id = $('#tracks').val();
 
-    var my_url = "playlist/add";//for creating new resource; default url
+    var my_url = $('#playlistForm').attr('action');
+    //var my_url = "playlist/add";//for creating new resource; default url
 
     //used to determine the url to use, add or update
     var state = $('#playlist-btn-save').val();
@@ -551,12 +558,23 @@ function savePlaylist() {
         return;
     }
 
-    //var formData = new FormData(document.getElementById('memberForm'));
+    //ENSURE AT LEAST ONE SELECTED TRACK
+    if(state != "update" && (track_id === '' || track_id.length < 1)){
+        //HIDE SPINNER
+        $( "#load" ).hide();
+
+        //DISPLAY ERROR MESSAGE
+        printSingleErrorMsg('.form-errors','Please select at least one track!');
+        return;
+    }
+
+    var formData = new FormData($('#playlistForm').get(0));
+    /*
     var formData = {
         name: name,
         id: id,
     }
-
+    */
 
     //SETUP CSRF TOKEN FOR AJAX
     $.ajaxSetup({
@@ -586,6 +604,8 @@ function savePlaylist() {
 
                 //RESET FORM
                 $('#playlistForm').trigger("reset");
+
+                $('#tracks').val("");
 
                 //HIDE MODAL
                 $('#playlistModal').modal('hide');

@@ -36,7 +36,7 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <p><a id="btn-add" name="btn-add" class="btn btn-primary" onclick="addPlaylist();"><i class="fa fa-plus"></i> Add Playlist</a></p>
+                <p><a id="btn-add" name="btn-add" class="btn btn-primary" onclick="addPlaylist();"><i class="fa fa-plus"></i> Create Playlist</a></p>
 
             </div>
         </div>
@@ -179,6 +179,25 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <label for="name">Playlist Name</label>
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter Playlist Name">
+                                <input type="hidden" id="playlist_id" name="playlist_id" value="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group tracks-group">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label for="name">Tracks</label>
+                                <select name="tracks[]" id="tracks" class="mdb-select" multiple>
+                                    <option value="" disabled selected>Select Tracks</option>
+                                   @if($tracks)
+                                       @foreach($tracks as $track)
+                                    <option value="{{ $track->id }}">{{ $track->title }} - {{ $track->artist_names }}</option>
+                                       @endforeach
+                                    @else
+                                        <option value="">No Tracks</option>
+                                    @endif
+                                </select>
+
                             </div>
                         </div>
 
@@ -190,7 +209,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         <button type="button" class="btn btn-primary" id="playlist-btn-save" value="add">Add Playlist</button>
-                        <input type="hidden" id="playlist_id" name="playlist_id" value="0">
+
 
                     </div>
                     <!-- /.modal-footer -->
