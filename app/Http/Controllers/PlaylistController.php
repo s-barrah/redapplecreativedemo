@@ -173,17 +173,17 @@ class PlaylistController extends Controller
         }else{
 
             //UPDATE DB
-            Playlist::whereId($request->id)->update(array(
+            Playlist::whereId($request->playlist_id)->update(array(
                 'name' => $request->name,
             ));
 
             //GET OBJECT USING ID
-            $playlist = Playlist::find($request->id);
+            $playlist = Playlist::find($request->playlist_id);
 
             $data['id'] = $playlist->id;
             $data['title'] = $playlist->name;
-            $data['created_at'] = date('F j, Y g:i a', strtotime($track->created_at));
-            $data['updated_at'] = date('F j, Y g:i a', strtotime($track->updated_at));
+            $data['created_at'] = date('F j, Y g:i a', strtotime($playlist->created_at));
+            $data['updated_at'] = date('F j, Y g:i a', strtotime($playlist->updated_at));
 
             $message = 'Playlist updated successfully!';
             $data['message'] = $message;

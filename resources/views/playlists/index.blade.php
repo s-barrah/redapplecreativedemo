@@ -98,7 +98,7 @@
                         <td><small>{{ date('F j, Y', strtotime($playlist->created_at)) }}</small></td>
                         <td><small>{{ date('F j, Y', strtotime($playlist->updated_at)) }}</small></td>
                         <td>
-                            <button type="button" data-content="{{$playlist->id}}" onclick="getPlaylist(this);" class="btn btn-info btn-xs" title="Edit {{$playlist->name}}"><i class="fa fa-pencil"></i> Edit</button>
+                            <button type="button" data-action="edit" data-content="{{$playlist->id}}" onclick="getPlaylist(this);" class="btn btn-info btn-xs" title="Edit {{$playlist->name}}"><i class="fa fa-pencil"></i> Edit</button>
                         </td>
                     </tr>
                 @endforeach
