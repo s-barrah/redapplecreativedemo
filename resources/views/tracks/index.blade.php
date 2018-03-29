@@ -15,11 +15,11 @@
 
                     <li>
                         <a href="javascript:void(0)" onclick="location.href='/playlists'" title="Playlists">
-                             Playlists
+                            <i class="fa fa-list-ul"></i> Playlists
                         </a>
                     </li>
                     <li class="active">
-                        {{ $pageTitle }}
+                        <i class="fa fa-music"></i> {{ $pageTitle }}
                     </li>
                 </ol>
             </div>
@@ -72,9 +72,8 @@
                     <th>Title</th>
                     <th>Artist Names</th>
                     <th>Playlist(s)</th>
-                    <th>Created</th>
-                    <th>Updated</th>
-                    <th>Edit</th>
+
+                    <th>#</th>
                 </tr>
                 </thead>
                 <tbody id="tracks-list">
@@ -90,15 +89,20 @@
 
                         <td>{{$track->artist_names}}</td>
                         <td>
-                            <ul>
-                            @foreach($track->playlists as $playlist)
-                                <li>{{$playlist->name}}</li>
-                            @endforeach
-                            </ul>
+                            <small>
+                                <ul class="list-styled">
+                                    @if(!$track->playlists->isEmpty())
+                                        @foreach($track->playlists as $playlist)
+                                            <li>{{$playlist->name}}</li>
+                                        @endforeach
+                                    @else
+                                        <li>No playlists</li>
+                                    @endif
+                                </ul>
+                            </small>
+
                         </td>
 
-                        <td><small>{{ date('F j, Y', strtotime($track->created_at)) }}</small></td>
-                        <td><small>{{ date('F j, Y', strtotime($track->updated_at)) }}</small></td>
                         <td>
                             <button type="button" data-action="add-to-playlist" class="btn btn-primary btn-xs add-to-playlist" data-content="{{$track->id}}" title="Add to Playlist" onclick="getTrack(this);"><i class="fa fa-plus"></i> Add to Playlist</button>
                             <button type="button" data-action="edit" data-content="{{$track->id}}" onclick="getTrack(this);" class="btn btn-info btn-xs" title="Edit {{$track->title}}"><i class="fa fa-pencil"></i> Edit</button>

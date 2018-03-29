@@ -31,8 +31,14 @@ class Track extends Model
     ];
 
 
+    public static $messages = [
+        'required' => 'The :attribute field cannot be blank!',
+        'min' => 'The track title must be longer than 3 characters!',
+    ];
+
+
     public static function validate(array $data){
-        return Validator::make($data, static::$rules);
+        return Validator::make($data, static::$rules, static::$messages);
     }
 
     public function playlists(){

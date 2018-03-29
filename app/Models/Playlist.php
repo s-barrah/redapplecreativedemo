@@ -32,6 +32,7 @@ class Playlist extends Model
 
     public static $messages = [
         'required' => 'The :attribute field cannot be blank!',
+        'min' => 'The playlist name must be longer than 3 characters!',
     ];
 
 

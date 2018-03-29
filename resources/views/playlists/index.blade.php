@@ -15,12 +15,12 @@
                     </li>
 
                     <li class="active">
-                        {{ $pageTitle }}
+                        <i class="fa fa-list-ul"></i> {{ $pageTitle }}
                     </li>
 
                     <li>
                         <a href="javascript:void(0)" onclick="location.href='/tracks'" title="Tracks">
-                            Tracks
+                            <i class="fa fa-music"></i> Tracks
                         </a>
                     </li>
                 </ol>
@@ -67,7 +67,7 @@
                     <th>Track(s)</th>
                     <th>Created</th>
                     <th>Updated</th>
-                    <th>Edit / Delete</th>
+                    <th>#</th>
                 </tr>
                 </thead>
                 <tbody id="playlists-list">
