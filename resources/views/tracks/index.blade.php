@@ -8,13 +8,13 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <ol class="breadcrumb">
                     <li>
-                        <a href="javascript:void(0)" onclick="location.href='/'" title="Home">
+                        <a href="javascript:void(0)" onclick="location.href='{{ url('/')}}'" title="Home">
                             <i class="fa fa-home"></i> Home
                         </a>
                     </li>
 
                     <li>
-                        <a href="javascript:void(0)" onclick="location.href='/playlists'" title="Playlists">
+                        <a href="javascript:void(0)" onclick="location.href='{{ route('playlists')}}'" title="Playlists">
                             <i class="fa fa-list-ul"></i> Playlists
                         </a>
                     </li>

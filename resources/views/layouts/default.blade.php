@@ -50,7 +50,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>{{ Html::linkRoute('home', 'Home')  }}</li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>{{ Html::linkRoute('playlists', 'Playlists')  }}</li>
